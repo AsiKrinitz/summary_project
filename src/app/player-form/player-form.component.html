@@ -1,0 +1,69 @@
+<h1>Player Form !</h1>
+
+<form #playerForm="ngForm" (ngSubmit)="onSubmitForm(playerForm)">
+  <label>Enter Player Name : </label>
+  <input
+    type="text"
+    name="name"
+    ngModel
+    required
+    minlength="2"
+    maxlength="10"
+  />
+
+  <label>Enter Age : </label>
+  <input type="number" name="age" ngModel required min="1" max="120" />
+
+  <label>Enter Favorite Color :</label>
+  <input
+    type="text"
+    name="color"
+    ngModel
+    required
+    minlength="3"
+    maxlength="7"
+  />
+
+  <br />
+
+  <label>choose your country</label>
+  <p-dropdown
+    [options]="countries"
+    [(ngModel)]="selectedCountry"
+    placeholder="Select a Country"
+    name="country"
+    [editable]="true"
+  >
+  </p-dropdown>
+
+  <br />
+
+  <label>Gender:</label>
+  <label
+    >Male<input type="radio" name="gender" value="male" ngModel required
+  /></label>
+  <label
+    >Female<input type="radio" name="gender" value="female" ngModel required
+  /></label>
+  <label
+    >Other<input type="radio" name="gender" value="other" ngModel required
+  /></label>
+
+  <button class="btn btn-success" type="submit" [disabled]="!playerForm.valid">
+    Submit Form !
+  </button>
+  <br />
+  <button class="btn btn-danger" type="reset">Reset Form</button>
+</form>
+
+<button class="btn btn-primary" (click)="getAllPlayersFromService()">
+  get all Players to console
+</button>
+
+<button class="btn btn-info" (click)="goToPlayerTable()">
+  move to players table with function in ts
+</button>
+
+<a [routerLink]="['/ranking']">go to ranking only with html code</a>
+
+<br /><br /><br /><br />

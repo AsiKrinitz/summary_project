@@ -1,0 +1,460 @@
+<div class="contanier">
+  <div class="top-page-header">
+    <app-cart-top-bar></app-cart-top-bar>
+  </div>
+  <br />
+  <h3 class="card-title">ברוכים הבאים, הצטרפות לעמותת חיל משאבי האנוש (שלישות)</h3>
+  <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)" *ngIf="contactData">
+    <div class="col-md-10">
+      <p-growl [(value)]="msgs"></p-growl>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="HashalNumber">מספר אישי</label>&nbsp;
+        <label class="text-danger">*</label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.HashalNumber" name="HashalNumber" required #formHashalNumber="ngModel" pattern="^(([0-9]{6,9}))$" />  <!--disabled="disabled">-->
+        <div *ngIf="formHashalNumber.errors?.required && formHashalNumber.touched" class="text-danger">
+          <strong>מספר אישי הינו שדה חובה</strong>
+        </div>
+        <div *ngIf="formHashalNumber.errors?.pattern && formHashalNumber.touched" class="text-warning">
+          <strong>מספר אישי אינו חוקי</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="IdentityNumber">תעודת זהות</label>&nbsp;
+        <label class="text-danger">*</label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.IdentityNumber" name="formIdentityNumber" style="width:100%;" placeholder="" required #formIdentityNumber="ngModel">
+        <div *ngIf="true" class="text-danger">
+          <strong *ngIf="formIdentityNumber.invalid && (formIdentityNumber.dirty || formIdentityNumber.touched) && contactData.IdentityNumber===''">תעודת זהות הינו שדה חובה</strong>
+          <strong *ngIf="!checkIsValidIdentityNumber(contactData.IdentityNumber)">תעודת זהות לא חוקית</strong>
+        </div>
+
+        <!--<input type="text" class="form-control" [(ngModel)]="contactData.IdentityNumber" name="IdentityNumber" required #formIdentityNumber="ngModel" pattern="^(([0-9]{6,9}))$" />--> <!--disabled="disabled">-->
+        <!--<div *ngIf="formIdentityNumber.errors?.required && formIdentityNumber.touched" class="text-danger">
+          <strong>תעודת זהות הינו שדה חובה</strong>
+        </div>
+        <div *ngIf="formIdentityNumber.errors?.pattern && formIdentityNumber.touched" class="text-warning">
+          <strong>תעודת זהות אינה חוקית</strong>
+        </div>-->
+      </div>
+      <div class="form-group col-md-2">
+        <label for="HashalRankId">דרגה</label>&nbsp;
+        <label class="text-danger"></label>
+        <p-dropdown id="HashalRankId" [options]="HashalRankOptions" [(ngModel)]="contactData.HashalRankId" name="HashalRankId" #formHashalRankId="ngModel"
+                    placeholder="בחר דרגה" [showClear]="true" [style]="{'width':'100%'}" filter="true" [required]='false'>
+        </p-dropdown>
+        <div *ngIf="formHashalRankId.invalid && (formHashalRankId.dirty || formHashalRankId.touched)" class="text-danger">
+          <strong>דרגה הינו שדה חובה</strong>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="LastName">שם פרטי</label>&nbsp;
+        <label class="text-danger">*</label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.FirstName" name="FirstName" required #formFirstName="ngModel" />  <!--disabled="disabled">-->
+        <div *ngIf="formFirstName.invalid && (formFirstName.dirty || formFirstName.touched)" class="text-danger">
+          <strong>שם פרטי הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="FirstName">שם משפחה</label>&nbsp;
+        <label class="text-danger">*</label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.LastName" name="LastName" required #formLastName="ngModel" />  <!--disabled="disabled">-->
+        <div *ngIf="formLastName.invalid && (formLastName.dirty || formLastName.touched)" class="text-danger">
+          <strong>שם משפחה הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="MaritalStatus">מצב משפחתי</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.MaritalStatus" name="MaritalStatus" #formMaritalStatus="ngModel">
+        <div *ngIf="formMaritalStatus.invalid && (formMaritalStatus.dirty || formMaritalStatus.touched)" class="text-danger">
+          <strong>מצב משפחתי הינו שדה חובה</strong>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="BirthdayDate">תאריך לידה</label>&nbsp;
+        <label class="text-danger">*</label>
+        <p-calendar placeholder="תאריך לידה" [(ngModel)]="contactData.BirthdayDate" name="BirthdayDate" #formBirthdayDate="ngModel" [monthNavigator]="true" [yearNavigator]="true" yearRange="1948:2099"
+                    dateFormat="dd/mm/yy" [showIcon]="true" inputId="BirthdayDate" [inputStyle]="{'width':'140px'}" [required]='true'>
+        </p-calendar>
+        <div *ngIf="formBirthdayDate.invalid && (formBirthdayDate.dirty || formBirthdayDate.touched)" class="text-danger">
+          <strong>תאריך לידה הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <!--<label for="GenderId">מגדר</label>&nbsp;
+        <label class="text-danger">*</label>
+        <p-dropdown id="GenderId" [options]="GenderOptions" [(ngModel)]="contactData.GenderId" name="GenderId" #formGenderId="ngModel"
+                    placeholder="בחר מגדר" [showClear]="true" [style]="{'width':'100%'}" filter="true" [required]='true'>
+        </p-dropdown>
+        <div *ngIf="formGenderId.invalid && (formGenderId.dirty || formGenderId.touched)" class="text-danger">
+          <strong>מגדר הינו שדה חובה</strong>
+        </div>-->
+      </div>
+      <div class="form-group col-md-2">
+        <label for="Address">כתובת</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.Address" name="Address" #formAddress="ngModel">    <!--required>-->
+        <!--<div *ngIf="formAddress.invalid && (formAddress.dirty || formAddress.touched)" class="text-danger">
+          <strong>כתובת הינו שדה חובה</strong>
+        </div>-->
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="CityId">עיר מגורים</label>&nbsp;
+        <label class="text-danger">*</label>
+        <p-dropdown id="CityId" [options]="CityOptions" [(ngModel)]="contactData.CityId" name="CityId" #formCityId="ngModel"
+                    placeholder="בחר עיר מגורים" [showClear]="true" [style]="{'width':'100%'}" filter="true" [required]='true'>
+        </p-dropdown>
+        <div *ngIf="formCityId.invalid && (formCityId.dirty || formCityId.touched)" class="text-danger">
+          <strong>עיר מגורים הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="Phone">טל נייד</label>&nbsp;
+        <label class="text-danger">*</label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.Phone" name="Phone" #formPhone="ngModel"
+               pattern="^(([0]{1}[0-9]{1,2}[0-9]{7}))$" required>
+        <div *ngIf="formPhone.invalid && (formPhone.dirty || formPhone.touched)" class="text-danger">
+          <strong>טל נייד הינו שדה חובה</strong>
+        </div>
+        <div *ngIf="formPhone.errors?.pattern && formPhone.touched" class="text-warning">
+          <strong>טל נייד אינו חוקי</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="Phone2">טל נוסף</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.Phone2" name="Phone2" #formPhone2="ngModel"
+               pattern="^(([0]{1}[0-9]{1,2}[0-9]{7}))$"> <!--required>-->
+        <!--<div *ngIf="formPhone2.invalid && (formPhone2.dirty || formPhone2.touched)" class="text-danger">
+        <strong>טל נוסף הינו שדה חובה</strong>
+        </div>-->
+        <div *ngIf="formPhone2.errors?.pattern && formPhone2.touched" class="text-warning">
+          <strong>טל נוסף אינו חוקי</strong>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-check form-check-inline col-md-2">
+        <p-checkbox [(ngModel)]="contactData.IsSmsAllowed" name='IsSmsAllowed' binary="true"></p-checkbox>
+        <label class="form-check-label" for="IsSmsAllowed">&nbsp;מאפשר לקבל מסרונים &nbsp;&nbsp;</label>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="Email">Email</label>&nbsp;
+        <label class="text-danger">*</label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.Email" name="Email" #formEmail="ngModel"
+               pattern="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" required>
+        <div *ngIf="formEmail.errors?.required && formEmail.touched" class="text-danger">
+        <strong>דואר אלקטרוני הינו שדה חובה</strong>
+        </div>
+        <div *ngIf="formEmail.errors?.pattern && formEmail.touched" class="text-warning">
+          <strong>מייל אינו חוקי</strong>
+        </div>
+      </div>
+      <div class="form-check form-check-inline col-md-2">
+        <p-checkbox [(ngModel)]="contactData.IsEmailAllowed" name='IsEmailAllowed' binary="true"></p-checkbox>
+        <label class="form-check-label" for="IsEmailAllowed">&nbsp;מאפשר לקבל מיילים &nbsp;&nbsp;</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="HashalLastJob">תפקיד אחרון בצה"ל</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.HashalLastJob" name="HashalLastJob" #formHashalLastJob="ngModel">
+        <div *ngIf="formHashalLastJob.invalid && (formHashalLastJob.dirty || formHashalLastJob.touched)" class="text-danger">
+          <strong>תפקיד אחרון בצה"ל הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="HashalUnit">יחידה</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.HashalUnit" name="HashalUnit" #formHashalUnit="ngModel">
+        <div *ngIf="formHashalUnit.invalid && (formHashalUnit.dirty || formHashalUnit.touched)" class="text-danger">
+          <strong>יחידה הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="DraftDate">תאריך גיוס</label>&nbsp;
+        <label class="text-danger"></label>
+        <p-calendar placeholder="תאריך גיוס" [(ngModel)]="contactData.DraftDate" name="DraftDate" #formDraftDate="ngModel" [monthNavigator]="true" [yearNavigator]="true" yearRange="1948:2099"
+                    dateFormat="dd/mm/yy" [showIcon]="true" inputId="DraftDate" [inputStyle]="{'width':'140px'}" [required]='false'>
+        </p-calendar>
+        <div *ngIf="formDraftDate.invalid && (formDraftDate.dirty || formDraftDate.touched)" class="text-danger">
+          <strong>תאריך גיוס הינו שדה חובה</strong>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="DischargeDate">תאריך שיחרור</label>&nbsp;
+        <label class="text-danger"></label>
+        <p-calendar placeholder="תאריך שיחרור" [(ngModel)]="contactData.DischargeDate" name="DischargeDate" #formDischargeDate="ngModel" [monthNavigator]="true" [yearNavigator]="true" yearRange="1948:2099"
+                    dateFormat="dd/mm/yy" [showIcon]="true" inputId="DischargeDate" [inputStyle]="{'width':'140px'}" [required]='false'>
+        </p-calendar>
+        <div *ngIf="formDischargeDate.invalid && (formDischargeDate.dirty || formDischargeDate.touched)" class="text-danger">
+          <strong>תאריך שיחרור הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="HashalServiceTypeId">סוג שירות</label>&nbsp;
+        <label class="text-danger">*</label>
+        <p-dropdown id="HashalServiceTypeId" [options]="HashalServiceTypeOptions" [(ngModel)]="contactData.HashalServiceTypeId" name="HashalServiceTypeId" #formHashalServiceTypeId="ngModel"
+                    placeholder="בחר סוג שירות" [showClear]="true" [style]="{'width':'100%'}" filter="true" [required]='true'>
+        </p-dropdown>
+        <div *ngIf="formHashalServiceTypeId.invalid && (formHashalServiceTypeId.dirty || formHashalServiceTypeId.touched)" class="text-danger">
+          <strong>סוג שירות הינו שדה חובה</strong>
+        </div>
+      </div>
+      <!--<div class="form-check form-check-inline col-md-4">
+      <label class="form-check-label" for="IsHashalPension">&nbsp;האם מקבל/ת גימלא מצה"ל &nbsp;&nbsp;</label>
+      <p-radioButton name="groupIsHashalPension" value="0" label="לא" [(ngModel)]="contactData.IsHashalPension" [ngModelOptions]="{standalone: true}"></p-radioButton>
+      <p-radioButton name="groupIsHashalPension" value="1" label="כן" [(ngModel)]="contactData.IsHashalPension" [ngModelOptions]="{standalone: true}"></p-radioButton>-->
+      <!--<p-checkbox [(ngModel)]="contactData.IsHashalPension" name='IsHashalPension' binary="true"></p-checkbox>-->
+      <!--</div>-->
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="CurrentCompany">מקום עבודה נוכחי</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.CurrentCompany" name="CurrentCompany" #formCurrentCompany="ngModel">
+        <div *ngIf="formCurrentCompany.invalid && (formCurrentCompany.dirty || formCurrentCompany.touched)" class="text-danger">
+          <strong>מקום עבודה נוכחי הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="CurrentJob">תפקיד בעבודה</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.CurrentJob" name="CurrentJob" #formCurrentJob="ngModel">
+        <div *ngIf="formCurrentJob.invalid && (formCurrentJob.dirty || formCurrentJob.touched)" class="text-danger">
+          <strong>תפקיד בעבודה הינו שדה חובה</strong>
+        </div>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="Phone3">טלפון בעבודה</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.Phone3" name="Phone3" #formPhone3="ngModel"
+               pattern="^(([0]{1}[0-9]{1,2}[0-9]{7}))$"> <!--required>-->
+        <!--<div *ngIf="formPhone3.invalid && (formPhone3.dirty || formPhone3.touched)" class="text-danger">
+        <strong>טל נוסף הינו שדה חובה</strong>
+        </div>-->
+        <div *ngIf="formPhone3.errors?.pattern && formPhone3.touched" class="text-warning">
+          <strong>טלפון בעבודה אינו חוקי</strong>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <label for="CurrentJobAddress">כתובת בעבודה</label>&nbsp;
+        <label class="text-danger"></label>
+        <input type="text" class="form-control" [(ngModel)]="contactData.CurrentJobAddress" name="CurrentJobAddress" #formCurrentJobAddress="ngModel">
+        <div *ngIf="formCurrentJobAddress.invalid && (formCurrentJobAddress.dirty || formCurrentJobAddress.touched)" class="text-danger">
+          <strong>כתובת בעבודה הינו שדה חובה</strong>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-pull-3">
+        <label for="HashalDonateAmount">אני מבקש/ת לתרום כל חודש סך של:</label>&nbsp;
+      </div>
+      <div class="form-group col-md-3">
+        <p-radioButton name="groupHashalDonateAmount" value="10" label="10" [(ngModel)]="contactData.HashalDonateAmount" [ngModelOptions]="{standalone: true}"></p-radioButton>
+        <p-radioButton name="groupHashalDonateAmount" value="15" label="15" [(ngModel)]="contactData.HashalDonateAmount" [ngModelOptions]="{standalone: true}"></p-radioButton>
+        <p-radioButton name="groupHashalDonateAmount" value="20" label="20" [(ngModel)]="contactData.HashalDonateAmount" [ngModelOptions]="{standalone: true}"></p-radioButton>
+        <p-radioButton name="groupHashalDonateAmount" value="25" label="25" [(ngModel)]="contactData.HashalDonateAmount" [ngModelOptions]="{standalone: true}"></p-radioButton>
+        <p-radioButton name="groupHashalDonateAmount" value="30" label="30" [(ngModel)]="contactData.HashalDonateAmount" [ngModelOptions]="{standalone: true}"></p-radioButton>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <p-radioButton name="groupHashalDonateAmount" value="0" label="אחר:" [(ngModel)]="contactData.HashalDonateAmount" [ngModelOptions]="{standalone: true}"></p-radioButton>
+        <div *ngIf="contactData.HashalDonateAmount=='0'">
+          <input type="text" class="form-control" [(ngModel)]="HashalDonateAmountOther" name="HashalDonateAmountOther" #formHashalDonateAmountOther="ngModel" pattern="^[1-9][0-9]*$" required>
+          <div *ngIf="formHashalDonateAmountOther.errors?.required" class="text-danger">
+            <strong>בבחירת אחר הסכום הינו חובה</strong>
+          </div>
+          <div *ngIf="formHashalDonateAmountOther.errors?.pattern" class="text-warning">
+            <strong>אחר הסכום אינו חוקי</strong>
+          </div>
+        </div>
+        <input *ngIf="contactData.HashalDonateAmount!='0'" type="text" class="form-control" [(ngModel)]="HashalDonateAmountOther" name="HashalDonateAmountOther" #formHashalDonateAmountOther="ngModel">  <!--pattern="^[1-9][0-9]*$">-->
+      </div>
+    </div>
+
+    <br>
+    <!--<div class="form-row">
+      <div class="form-group col-md-4">
+      </div>
+      <div class="form-group col-md-2">
+      </div>
+      <div class="form-group col-md-4">
+        <div *ngIf="contactData.UpdateDate">
+          <label for="UpdateUser">מעדכן אחרון:</label>&nbsp;
+          <label>{{contactData.ContactUpdater}}</label>
+          <label>{{contactData.UpdateDate | date: 'dd/MM/yyyy'}}</label>
+        </div>
+        <div>
+          <label for="CreateUser">יוצר איש קשר:</label>&nbsp;
+          <label>{{contactData.ContactCreator}}</label>
+          <label>{{contactData.CreateDate | date: 'dd/MM/yyyy'}}</label>
+        </div>
+      </div>
+    </div>-->
+
+    <br>
+    <div class="form-row">
+      <div class="form-group">
+        <label>&nbsp;</label>
+        <button [disabled]="f.invalid" type="submit" id="Save" class="btn btn-outline-success" style="border-radius: 3px;" pTooltip="המשך לתשלום"
+                showDelay="300" tooltipPosition="top">
+
+          <!--*ngIf="userDetails && (userDetails.ClientRoleContactUpdater)">-->
+          <i class="fa fa-check-square-o"></i> המשך לתשלום
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <p-dialog header="מקבל גימלא מצה''ל" [(visible)]="hashalPensionDisplay" [responsive]="true" showEffect="fade" [modal]="true" [width]="550" [closable]="false" [showHeader]="true">
+    <form #Pform="ngForm">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+          <label class="font-weight-bold">שלום {{contactData.FirstName}} {{contactData.LastName}}</label>
+        </div>
+        <div class="ui-g-12">
+          <label class="font-weight-bold">כיוון שאת/ה מקבל/ת שכר/גמלה מצה"ל התרומה תנוכה משכרך אחת לחודש. באפשרותך לאשר את הסכמתך על ידי הכנסת קוד האימות שקיבלת בנייד ולחיצה על הכפתור הנני מסכים.</label>
+          <!--<label class="font-weight-bold"> הנני מסכימ/ה או להדפיס את טופס הבקשה, לחתום עליו ולהעביר למרכז העמותה במייל.</label>-->
+        </div>
+        <div class="ui-g-4">
+          <label for="VerCode">קוד אימות שנשלח לנייד</label>&nbsp;
+          <label class="text-danger"></label>
+          <input type="text" class="form-control" [(ngModel)]="VerCode" name="VerCode" #formVerCode="ngModel" [required]='true' maxlength="6" />
+          <div *ngIf="formVerCode.invalid && (formVerCode.dirty || formVerCode.touched)" class="text-danger">
+            <strong>קוד אימות הינו שדה חובה</strong>
+          </div>
+        </div>
+        <div class="ui-g-8">
+        </div>
+      </div>
+    </form>
+    <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="" (click)="updateMonthlyChargeApproval()" label="הנני מסכימ/ה לחיוב חודשי על בסיס הרישום" [disabled]="Pform.invalid"></button>
+        <!--<button type="button" pButton icon="" (click)="getChargeForm()" label="אני מעדיפ/ה להעביר הטופס לעמותה" [disabled]=""></button>-->
+      </div>
+    </p-footer>
+  </p-dialog>
+  <p-dialog header="לא מקבל/ת גימלא מצה''ל" (onShow)="ViewInit()" [(visible)]="notHashalPensionDisplay" [responsive]="true" showEffect="fade" [modal]="true" [width]="550" [closable]="false" [showHeader]="true">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <label class="font-weight-bold">שלום {{contactData.FirstName}} {{contactData.LastName}}</label>
+      </div>
+      <div class="ui-g-12">
+        <label class="font-weight-bold">ברכות להצטרפותך לעמותת חיל משאבי האנוש (שלישות)</label>
+      </div>
+      <!--<div class="ui-g-12">
+    <iframe [src]="urlSafe" width="370px" height="455px" frameborder="0"></iframe>
+  </div>-->
+      <form *ngIf="(successHiden && failedHiden)" style="margin-top: 2px;" (ngSubmit)="onCharge()" #paytForm="ngForm" [formGroup]="paymentForm" novalidate> 
+        <div class="row h-100 justify-content-center align-self-center pt-1" style="margin-right: 0px;margin-left: 0px;" *ngIf="contactData">
+          <div class="card card-outline-secondary">
+            <div class="card-body">
+              <h3 class="text-center">תשלום בכרטיס אשראי</h3>
+              <div class="row pt-4">
+                <div class="col-md-4">
+                  <label for="payment_amount" style="height: auto;">סכום לתשלום </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" formControlName="amount" [readonly]="true"
+                           [disabled]="true" id="payment_amount" style="text-align:right;">
+                    <div class="input-group-append">
+                      <span class="input-group-text">{{currencyCode}}</span>
+                    </div>
+                  </div>
+                </div>
+                <!--<div class="col-md-3">
+                  <label for="selectedMaxInstallments" style="height: auto;">מספר תשלומים </label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" formControlName="Installments" id="selectedMaxInstallments" style="text-align:right;">
+                    <div class="input-group-append">
+                      <span class="input-group-text">1 עד {{MaxInstallments}} תשלומים</span>
+                    </div>
+                    <div *ngIf="!paymentForm.controls.Installments.valid"
+                         class="cross-validation-error-message alert alert-danger">
+                      <span>מספר תשלומים אינו תקין</span>
+                    </div>
+                  </div>
+                </div>-->
+              </div>
+              <div class="row pt-2">
+                <div class="col-md-10">
+                  <label for="credit_card_num">מספר כרטיס </label>
+                  <div class="form-control" id="credit_card_num">
+                  </div>
+                  <div id="errors_for_number" class="error_message"></div>
+                  <div *ngIf="!cardNumValid" id="credit_card_num_error"
+                       class="cross-validation-error-message alert alert-danger">
+                    <span>מספר כרטיס אינו תקין</span>
+                  </div>
+                </div>
+                <div class="col-md-2 photo">
+                  <img src="{{imageSrc}}" style="padding-top: 15px;" *ngIf="imageSrc && imageSrc !== ''">
+                </div>
+              </div>
+              <div class="row pt-2">
+                <div class="col-md-12">
+                  <label for="card_holder_id_number" style="height: auto;">תעודת זהות</label>
+                  <div class="form-control" id="card_holder_id_number"></div>
+                  <div id="errors_for_id" class="error_message"></div>
+                  <div *ngIf="!cardHolderValid&&!paymentForm.controls.creditCardHolderId.valid"
+                       class="cross-validation-error-message alert alert-danger">
+                    <span>תעודת זהות אינה תקינה</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-3">
+                <div class="col-md-6">
+                  <label for="expiry">תוקף </label>
+                  <div class="form-control" id="expiry"></div>
+                  <div id="errors_for_expiry" class="error_message"></div>
+                  <div *ngIf="!expiryValid" class="cross-validation-error-message alert alert-danger">
+                    <span>תוקף כרטיס אינו תקין</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="cvv">קוד בגב הכרטיס </label>
+                  <div class="form-control" id="cvv"></div>
+                  <div id="errors_for_cvv" class="error_message"></div>
+                  <div *ngIf="!cvvValid" class="cross-validation-error-message alert alert-danger">
+                    <span>קוד בגב הכרטיס אינו תקין</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row pt-4">
+                <div class="buttons col-md-12" style="text-align: left;">
+                  <button type="submit" class="btn btn-primary">ביצוע תשלום</button>     <!--[disabled]="!paymentForm.valid"-->
+                  <!--<a type="button" class="btn btn-secondary btn-base" style="float: right;" href="/summary">חזרה</a>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="row h-100 justify-content-center align-self-center">
+    <span> copyright_message</span>
+  </div>-->
+
+      </form>
+
+    </div>
+    <!--<p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">
+        <button type="button" pButton icon="" (click)="chargeCreditCard()" label="סיום" [disabled]=""></button>
+        <button type="button" pButton icon="" (click)="getChargeForm()" label="אני מעדיף להעביר את הטופס לעמותה" [disabled]=""></button>
+      </div>
+    </p-footer>-->
+  </p-dialog>
+</div>

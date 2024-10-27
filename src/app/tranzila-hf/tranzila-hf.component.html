@@ -1,0 +1,181 @@
+<form
+  *ngIf="successHiden && failedHiden"
+  style="margin-top: 100px"
+  #paytForm="ngForm"
+  (ngSubmit)="onSubmit()"
+  [formGroup]="paymentForm"
+  novalidate
+>
+  <div class="row h-100 justify-content-center align-self-center pt-5">
+    <div class="card card-outline-secondary">
+      <div class="card-body">
+        
+        <div class="row pt-4">
+          <div class="col-md-4">
+            <label for="payment_amount" style="height: auto"
+              >Amount to pay :</label
+            >
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="amount"
+                [readonly]="true"
+                [disabled]="true"
+                id="payment_amount"
+                style="text-align: right"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">{{ currencyCode }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <label>product name : </label>
+          <input
+            type="text"
+            [readonly]="true"
+            value="{{ nameOfProduct }}"
+            style="text-align: center"
+          />
+        </div>
+
+        <div class="row pt-2">
+          <div class="col-md-10">
+            <label for="credit_card_num">Credit Card Number : </label>
+            <div class="form-control" id="credit_card_num"></div>
+            <div id="errors_for_number" class="error_message"></div>
+            <div
+              *ngIf="!cardNumValid"
+              id="credit_card_num_error"
+              class="cross-validation-error-message alert alert-danger"
+            >
+              <span>Incorrect credit card number</span>
+            </div>
+          </div>
+          <div class="col-md-2 photo">
+            <img
+              src="{{ imageSrc }}"
+              style="padding-top: 15px"
+              *ngIf="imageSrc && imageSrc !== ''"
+            />
+          </div>
+        </div>
+        <div class="row pt-2">
+          <div class="col-md-12">
+            <label for="card_holder_id_number" style="height: auto"
+              >Card holder ID :
+            </label>
+            <div class="form-control" id="card_holder_id_number"></div>
+            <div id="errors_for_id" class="error_message"></div>
+            <div
+              *ngIf="
+                !cardHolderValid &&
+                !paymentForm.controls['creditCardHolderId'].valid
+              "
+              class="cross-validation-error-message alert alert-danger"
+            >
+              <span>Invalid holder ID number</span>
+            </div>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-md-7">
+            <label for="expiry">Expiry date : </label>
+            <div class="form-control" id="expiry"></div>
+            <div id="errors_for_expiry" class="error_message"></div>
+            <div
+              *ngIf="!expiryValid"
+              class="cross-validation-error-message alert alert-danger"
+            >
+              <span>Invalid card expiration date</span>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <label for="cvv">CVV</label>
+            <div class="form-control" id="cvv"></div>
+            <div id="errors_for_cvv" class="error_message"></div>
+            <div
+              *ngIf="!cvvValid"
+              class="cross-validation-error-message alert alert-danger"
+            >
+              <span>Invalid CVV</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="row pt-4">
+          <div class="col-md-12">
+            <button type="submit" class="btn btn-success" style="width: 100%">
+              Pay now !
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row h-100 justify-content-center align-self-center">
+    <span> Tranzila ©Tranzilla Services - All rights reserved</span>
+  </div>
+</form>
+
+<div *ngIf="!successHiden">
+  <div class="container">
+    <div class="row justify-content-center align-self-center pt-5">
+      <div
+        class="swal2-icon swal2-success swal2-animate-success-icon"
+        style="display: flex"
+      >
+        <div
+          class="swal2-success-circular-line-left"
+          style="background-color: rgb(255, 255, 255)"
+        ></div>
+        <span class="swal2-success-line-tip"></span>
+        <span class="swal2-success-line-long"></span>
+        <div class="swal2-success-ring"></div>
+        <div
+          class="swal2-success-fix"
+          style="background-color: rgb(255, 255, 255)"
+        ></div>
+        <div
+          class="swal2-success-circular-line-right"
+          style="background-color: rgb(255, 255, 255)"
+        ></div>
+      </div>
+    </div>
+    <div class="row justify-content-center align-self-center pt-5">
+      <h2 style="color: #0fad00">Payment completed successfully!</h2>
+    </div>
+    <div class="row justify-content-center align-self-center pt-5">
+      <h5>Confirmation code: {{ auth_number }}</h5>
+
+      <h3>{{ tranzilaResponse | json }}</h3>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!failedHiden">
+  <div class="container">
+    <div class="row justify-content-center align-self-center pt-5">
+      <div
+        class="swal2-icon swal2-error swal2-animate-error-icon"
+        style="display: flex"
+      >
+        <span class="swal2-x-mark">
+          <span class="swal2-x-mark-line-left"></span>
+          <span class="swal2-x-mark-line-right"></span>
+        </span>
+      </div>
+    </div>
+    <div class="row justify-content-center align-self-center pt-5">
+      <h2 style="color: #ff0000">Payment failed!</h2>
+    </div>
+    <div class="row justify-content-center align-self-center pt-5">
+      <h5>{{ errorMessage }}</h5>
+
+      <h3>{{ tranzilaResponse | json }}</h3>
+    </div>
+  </div>
+</div>

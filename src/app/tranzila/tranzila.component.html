@@ -1,0 +1,57 @@
+<p>tranzila works!</p>
+
+<br />
+
+<label>enter sum to pay</label>
+<input type="number" [(ngModel)]="userSum" />
+
+<br /><br />
+
+{{ userSum }}
+
+<br /><br />
+
+<a
+  target="_blank"
+  href="https://direct.tranzila.com/naamat100/iframenew.php?sum={{
+    userSum
+  }}&currency=1&cred_type=1"
+  >with user sum</a
+>
+
+<br /><br />
+
+<button (click)="tryToPay(userSum)" class="btn btn-primary">pay?</button>
+
+<br /><br />
+<iframe
+  height="370px"
+  width="455px"
+  src="https://direct.tranzila.com/naamat100/iframenew.php?sum=100
+  &currency=1&cred_type=1"
+  class="iframe-content"
+  >hello
+</iframe>
+
+<br /><br />
+
+<h2>see naamat products</h2>
+<a target="_blank" href="https://pay.tranzila.com/naamat100">go to products </a>
+
+<br /><br />
+
+<h2>donnate to naamat here</h2>
+<a
+  target="_blank"
+  href="https://pay.tranzila.com/naamat100/SGtvN2pYYys2ZFZYOWZkYnlNSVZuUT09"
+  >donnate to Naamat</a
+>
+
+<br /><br /><br />
+
+<h2>donnate money to asi</h2>
+<a
+  target="_blank"
+  href="https://pay.tranzila.com/naamat100/VkNXOHVsNmU0UzdmQ2hUS2hiWkNCQT09"
+  >donnate here !</a
+>

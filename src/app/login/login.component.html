@@ -1,0 +1,144 @@
+<form #getStartedForm="ngForm" (ngSubmit)="submitLogin(getStartedForm)">
+  <label>User name :</label>
+  <input
+    pInputText
+    type="text"
+    name="UserName"
+    [(ngModel)]="userName"
+    required
+    minlength="4"
+    maxlength="10"
+  />
+
+  <label>Password :</label>
+  <input
+    pInputText
+    type="password"
+    name="Password"
+    [(ngModel)]="userPass"
+    required
+    minlength="8"
+    maxlength="15"
+  />
+
+  <br /><br />
+
+  <button
+    pButton
+    pRipple
+    type="button"
+    label="Login !"
+    class="p-button-rounded p-button-success"
+    type="submit"
+    [disabled]="!getStartedForm.valid"
+  ></button>
+</form>
+
+<button
+  pButton
+  pRipple
+  type="button"
+  label="Sign up here !"
+  class="p-button-rounded p-button-secondary"
+  (click)="showResponsiveDialog()"
+></button>
+
+<p-dialog
+  header="Sign Up Form !"
+  [(visible)]="displayResponsive"
+  [breakpoints]="{ '960px': '75vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  [modal]="true"
+>
+  <form #signupForm="ngForm" (ngSubmit)="submitSignUp(signupForm)">
+    <label>User name :</label>
+    <input
+      pInputText
+      type="text"
+      name="UserName"
+      [(ngModel)]="userName"
+      required
+      minlength="4"
+      maxlength="10"
+    />
+
+    <label>Password :</label>
+    <input
+      pInputText
+      type="password"
+      name="Password"
+      [(ngModel)]="userPass"
+      required
+      minlength="8"
+      maxlength="15"
+    />
+
+    <label>enter your firstName</label>
+    <input
+      type="text"
+      name="FirstName"
+      [(ngModel)]="firstName"
+      required
+      minlength="2"
+      maxlength="7"
+    />
+
+    <label>enter your lastName</label>
+    <input
+      type="text"
+      name="LastName"
+      [(ngModel)]="lastName"
+      required
+      minlength="2"
+      maxlength="10"
+    />
+
+    <label> enter your email</label>
+    <input
+      type="email"
+      name="userEmail"
+      [(ngModel)]="email"
+      required
+      minlength="5"
+      maxlength="15"
+    />
+
+    <label>enter your phone number</label>
+    <input
+      type="text"
+      name="UserPhone"
+      [(ngModel)]="phone"
+      required
+      minlength="5"
+      maxlength="10"
+    />
+
+    <label>Country</label>
+    <input
+      type="text"
+      name="Country"
+      [(ngModel)]="country"
+      required
+      minlength="3"
+      maxlength="10"
+    />
+
+    <p-button
+      type="submit"
+      label="Sign up !"
+      styleClass="p-button-text"
+      [disabled]="!signupForm.valid"
+    ></p-button>
+    <p-button
+      (click)="displayResponsive = false"
+      label="Cancel"
+      styleClass="p-button-text"
+    ></p-button>
+  </form>
+</p-dialog>
+
+<p>{{ userName }} {{ userPass }}</p>
+
+<br /><br /><br /><br />

@@ -1,0 +1,68 @@
+<h1 id="title">This Is Our Home Page !!</h1>
+
+<form #f="ngForm" >
+  <label>enter name</label>
+  <input type="text" name="name" [(ngModel)]="userName" />
+
+  <label>enter age </label>
+  <input type="number" name="age" [(ngModel)]="userAge" />
+
+  <button (click)="goToGallery(f)">go to gallery Component</button>
+</form>
+
+<p>your name is : {{ userName }} and your age is : {{ userAge }}</p>
+
+
+
+<h3 id="sub-title">a little bit about on our company...</h3>
+<div class="border-style">
+  <p id="info">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex consequuntur
+    excepturi nobis corporis eos, sint beatae labore fugiat alias quis
+    praesentium. Vero eligendi exercitationem accusantium molestiae rem? Impedit
+    ipsam assumenda magni ducimus expedita, suscipit non sunt alias quo nihil
+    molestiae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
+    consequuntur excepturi nobis corporis eos, sint beatae labore fugiat alias
+    quis praesentium. Vero eligendi exercitationem accusantium molestiae rem?
+    Impedit ipsam assumenda magni ducimus expedita, suscipit non sunt alias quo
+    nihil molestiae.
+  </p>
+</div>
+
+<h2 id="labelId">enter your Id here :</h2>
+<input type="number" [(ngModel)]="id" />
+
+<br /><br />
+
+<p-button
+  label="find my user !"
+  styleClass="p-button-rounded p-button-help"
+  (click)="findUser(id)"
+></p-button>
+
+<br /><br />
+
+<h3 *ngIf="!showTable">enter your id !</h3>
+<h3 *ngIf="noRecordFound">sorry not records found !</h3>
+
+<table class="table" *ngIf="showTable && id > 0">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>age</th>
+      <th>color</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>{{ id }}</td>
+      <td>{{ name }}</td>
+      <td>{{ age }}</td>
+      <td>{{ color }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<br /><br /><br /><br />

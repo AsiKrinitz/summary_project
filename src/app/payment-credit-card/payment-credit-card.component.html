@@ -1,0 +1,252 @@
+<p-growl [(value)]="msgs"></p-growl>
+
+<div class="container">
+  <div class="top-page-header">
+    <app-cart-top-bar></app-cart-top-bar>
+  </div>
+
+  <div class="filter-and-data-container">
+    <div
+      *ngIf="creditCardPaymentResult && !creditCardPaymentResult.isSucceed"
+      class="payment-error"
+    >
+      <div
+        class="payment-error-message"
+        [title]="creditCardPaymentResult.ErrorMessage"
+      >
+        {{ creditCardPaymentResult.Details }}
+      </div>
+      <div class="payment-error-recommend">
+        {{ creditCardPaymentResult.Reccomendations }}
+      </div>
+    </div>
+
+    <form
+      *ngIf="successHiden && failedHiden"
+      style="margin-top: 20px"
+      #paytForm="ngForm"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="paymentForm"
+      novalidate
+    >
+      <div
+        class="row h-100 justify-content-center align-self-center pt-5"
+        *ngIf="dataActivities"
+      >
+        <div class="card card-outline-secondary">
+          <div class="card-body">
+            <h3 class="text-center">תשלום בכרטיס אשראי</h3>
+            <div class="row pt-4">
+              <div class="col-md-3">
+                <label for="payment_amount" style="height: auto"
+                  >סכום לתשלום
+                </label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="amount"
+                    [readonly]="amountDisabled"
+                    [disabled]="amountDisabled"
+                    id="payment_amount"
+                    style="text-align: right"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text">{{ currencyCode }}</span>
+                  </div>
+                  <div
+                    *ngIf="!paymentForm.controls.amount.valid"
+                    class="cross-validation-error-message alert alert-danger"
+                  >
+                    <span>הכנס סכום לתשלום</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="selectedMaxInstallments" style="height: auto"
+                  >מספר תשלומים
+                </label>
+                <div class="input-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="Installments"
+                    id="selectedMaxInstallments"
+                    style="text-align: right"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      >1 עד {{ MaxInstallments }} תשלומים</span
+                    >
+                  </div>
+                  <div
+                    *ngIf="!paymentForm.controls.Installments.valid"
+                    class="cross-validation-error-message alert alert-danger"
+                  >
+                    <span>מספר תשלומים אינו תקין</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-md-10">
+                <label for="credit_card_num">מספר כרטיס </label>
+                <div class="form-control" id="credit_card_num"></div>
+                <div id="errors_for_number" class="error_message"></div>
+                <div
+                  *ngIf="!cardNumValid"
+                  id="credit_card_num_error"
+                  class="cross-validation-error-message alert alert-danger"
+                >
+                  <span>מספר כרטיס אינו תקין</span>
+                </div>
+              </div>
+              <div class="col-md-2 photo">
+                <img
+                  src="{{ imageSrc }}"
+                  style="padding-top: 15px"
+                  *ngIf="imageSrc && imageSrc !== ''"
+                />
+              </div>
+            </div>
+            <div class="row pt-2">
+              <div class="col-md-12">
+                <label for="card_holder_id_number" style="height: auto"
+                  >תעודת זהות</label
+                >
+                <div class="form-control" id="card_holder_id_number"></div>
+                <div id="errors_for_id" class="error_message"></div>
+                <div
+                  *ngIf="
+                    !cardHolderValid &&
+                    !paymentForm.controls.creditCardHolderId.valid
+                  "
+                  class="cross-validation-error-message alert alert-danger"
+                >
+                  <span>תעודת זהות אינה תקינה</span>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-3">
+              <div class="col-md-7">
+                <label for="expiry">תוקף </label>
+                <div class="form-control" id="expiry"></div>
+                <div id="errors_for_expiry" class="error_message"></div>
+                <div
+                  *ngIf="!expiryValid"
+                  class="cross-validation-error-message alert alert-danger"
+                >
+                  <span>תוקף כרטיס אינו תקין</span>
+                </div>
+              </div>
+              <div class="col-md-5">
+                <label for="cvv">קוד בגב הכרטיס </label>
+                <div class="form-control" id="cvv"></div>
+                <div id="errors_for_cvv" class="error_message"></div>
+                <div
+                  *ngIf="!cvvValid"
+                  class="cross-validation-error-message alert alert-danger"
+                >
+                  <span>קוד בגב הכרטיס אינו תקין</span>
+                </div>
+              </div>
+            </div>
+            <div class="row pt-4">
+              <div class="buttons col-md-12" style="text-align: left">
+                <a type="button" class="btn btn-secondary btn-base" href="/home"
+                  >חזרה לחיפוש</a
+                >
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="
+                    !paymentForm.controls.Installments.valid ||
+                    !paymentForm.controls.amount.valid ||
+                    Submited
+                  "
+                >
+                  ביצוע תשלום
+                </button>
+                <a
+                  type="button"
+                  class="btn btn-secondary btn-base"
+                  style="float: right"
+                  href="/summary"
+                  >חזרה</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--<div class="row h-100 justify-content-center align-self-center">
+        <span> copyright_message</span>
+      </div>-->
+    </form>
+
+    <div *ngIf="!successHiden">
+      <div class="container">
+        <div class="row justify-content-center align-self-center pt-5">
+          <div
+            class="swal2-icon swal2-success swal2-animate-success-icon"
+            style="display: flex"
+          >
+            <div
+              class="swal2-success-circular-line-left"
+              style="background-color: rgb(255, 255, 255)"
+            ></div>
+            <span class="swal2-success-line-tip"></span>
+            <span class="swal2-success-line-long"></span>
+            <div class="swal2-success-ring"></div>
+            <div
+              class="swal2-success-fix"
+              style="background-color: rgb(255, 255, 255)"
+            ></div>
+            <div
+              class="swal2-success-circular-line-right"
+              style="background-color: rgb(255, 255, 255)"
+            ></div>
+          </div>
+        </div>
+        <div class="row justify-content-center align-self-center pt-5">
+          <h2 style="color: #0fad00">התשלום בוצע בהצלחה</h2>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!failedHiden">
+      <div class="container">
+        <div class="row justify-content-center align-self-center pt-5">
+          <div
+            class="swal2-icon swal2-error swal2-animate-error-icon"
+            style="display: flex"
+          >
+            <span class="swal2-x-mark">
+              <span class="swal2-x-mark-line-left"></span>
+              <span class="swal2-x-mark-line-right"></span>
+            </span>
+          </div>
+        </div>
+        <div class="row justify-content-center align-self-center pt-5">
+          <h2 style="color: #ff0000">התשלום נכשל!</h2>
+        </div>
+        <div class="row justify-content-center align-self-center pt-5">
+          <h5>{{ errorMessage }}</h5>
+        </div>
+        <!--<div class="row pt-4">-->
+        <div class="buttons" style="text-align: left">
+          <a type="button" class="btn btn-secondary btn-base" href="/home"
+            >חזרה לחיפוש</a
+          >
+          <a
+            type="button"
+            class="btn btn-secondary btn-base"
+            style="float: right"
+            href="/summary"
+            >חזרה</a
+          >
+        </div>
+        <!--</div>-->
+      </div>
+    </div>
+  </div>
+</div>

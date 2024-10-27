@@ -1,0 +1,128 @@
+.select {
+  display: block;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  background-color: #fff;
+  color: #333;
+}
+
+.select:focus {
+  outline: none;
+  border: 1px solid #3f51b5;
+}
+
+.select option {
+  background-color: #fff;
+  color: #333;
+}
+
+.key-events-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #f1f1f1;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.key-up,
+.key-down {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.key-up h3,
+.key-down h3 {
+  color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.key-up p,
+.key-down p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.animal-select {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.selected-animal {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.input-heading {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.input-description {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.name-input {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.option-select {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.top-left-button {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.top-right-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.bottom-left-button {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+}
+
+.bottom-right-button {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}

@@ -1,0 +1,74 @@
+<h1>Dates Explain in Angular</h1>
+
+<h3>in order to use Date in angular we can use a object called Date</h3>
+
+<p>
+  we can get the current date by using a simple method - <br />
+  todayDate : Date = new Date(); <br />
+  we just create a property type of Date and creating a new object of it and it
+  will get our current time in the country -
+  <br />
+</p>
+
+<h4>{{ todayDate }}</h4>
+
+<br /><br />
+
+<p>
+  if you want you can change the format of the date with pipes !
+  <br />
+</p>
+<h3>short pipe</h3>
+<p>
+  A shortDate format that displays the date and time in the locale-specific
+  short format. For example, "M/d/yy h:mm a" in the en-US locale.
+</p>
+
+<h4>example to short pipe - {{ todayDate | date : "short" }}</h4>
+
+<br />
+
+<h3>medium pipe</h3>
+<p>
+  A medium format that displays the date and time in the locale-specific medium
+  format. For example, "MMM d, y h:mm:ss a" in the en-US locale.
+</p>
+<h4>exapmle to medium pipe - {{ todayDate | date : "medium" }}</h4>
+
+<br />
+
+<h3>long pipe</h3>
+<p>
+  A long format that displays the date and time in the locale-specific long
+  format. For example, "MMMM d, y h:mm:ss a z" in the en-US locale.
+</p>
+
+<h4>exapmle to medium pipe - {{ todayDate | date : "long" }}</h4>
+
+<br /><br />
+
+<h3>if you wana see without hour only date -</h3>
+<p>
+  you just need to add "Date" to the pipe like instend of short it will be
+  shortDate instend of long it will be longDate
+</p>
+
+<h4>example for shortDate - {{ todayDate | date : "shortDate" }}</h4>
+<h4>example for mediumDate - {{ todayDate | date : "mediumDate" }}</h4>
+<h4>example for longDate - {{ todayDate | date : "longDate" }}</h4>
+
+<br /><br />
+
+<h3>
+  if you want to do it in israeli format it will be like - <br />
+  <br />
+
+  <!-- Custom format -->
+  {{ todayDate | date : "dd/MM/yyyy" }}
+  <br /><br />
+</h3>
+
+<p>
+  like this you can do by creating your own format and give it to the pipe in
+  the order like this - date : "dd/MM/yyyy"
+</p>

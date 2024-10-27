@@ -1,0 +1,243 @@
+<div class="container">
+  <h1>This page gonna focus on Angular Events Types !</h1>
+  <h3>im gonna give a short explain about each one.</h3>
+  <br /><br />
+
+  <h2>keypress !</h2>
+  <p>
+    on every keypress this event will trigger !
+    <br />
+    it will console every time you enter any key.
+    <br />
+    and it will catch your last input and and total input into properties.
+  </p>
+  <label class="label">enter your name :</label>
+  <input
+    class="input"
+    type="text"
+    (keypress)="onKeyPress($event)"
+    (input)="catchName($event)"
+    placeholder="any key keypress"
+  />
+
+  <p>this is the last input you enter : {{ input }}</p>
+  <p>and this is the input you enterd : {{ name2 }}</p>
+
+  <br /><br />
+
+  <div class="key-events-box">
+    <div class="key-up">
+      <h2>keyup & keydown</h2>
+      <h2>keyup</h2>
+
+      <p>
+        the (keyup) event will trigger the method every time the key is released
+        after being pressed ! (console the event and last input)
+      </p>
+      <input
+        class="input"
+        type="text"
+        (keyup)="onKeyPress($event)"
+        placeholder="keyup"
+      />
+      <br />
+      <h2>keydown</h2>
+
+      <p>
+        The (keydown) event will triggered when a key on the keyboard is pressed
+        down ! (console the event and last input)
+      </p>
+      <input
+        class="input"
+        type="text"
+        (keydown)="onKeyPress($event)"
+        placeholder="keydown"
+      />
+    </div>
+  </div>
+
+  <br /><br />
+
+  <h2>Change event!</h2>
+
+  <p>every time there is a change, this event will be trigger !</p>
+  <label>enter your name or something...</label>
+  <input
+    class="input"
+    type="text"
+    [(ngModel)]="userInput"
+    (change)="onChange($event)"
+    placeholder="enter your name.."
+  />
+
+  <p>Hello ! >> {{ userInput }}</p>
+
+  <br /><br />
+
+  <label>choose from the list !</label>
+  <p>
+    every time you will change something from the list the method will be
+    trigger !
+  </p>
+  <select
+    class="option-select"
+    [(ngModel)]="selectedValue"
+    (change)="onChange3($event)"
+  >
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
+
+  <p>you choose : {{ selectedValue }}</p>
+
+  <br /><br /><br />
+
+  <h2>input event !</h2>
+
+  <p>
+    every time a input is enterd this event will be triggered !
+    <br />
+    so each key you press this event is trigger. (console the event)
+    <br />
+    and you can get the data with 2 ways :<br />
+    databinding or with (event.target as HTMLInputElement).value;
+  </p>
+  <input
+    class="input"
+    type="text"
+    (input)="onInput($event)"
+    placeholder="input"
+    [(ngModel)]="input"
+  />
+
+  <p>{{ input }}</p>
+
+  <br /><br />
+
+  <h2>Change - example with checkbox</h2>
+
+  <label>are you above 18?</label>
+  <input type="checkbox" (change)="onCheckBoxChange($event)" />
+  <p></p>
+  <div>
+    <p-checkbox
+      (change)="onChangeAge($event)"
+      [(ngModel)]="checked"
+      [binary]="true"
+      label="are you above 18?"
+    ></p-checkbox>
+  </div>
+
+  {{ checked }}
+
+  <input class="form-check-input" type="checkbox" [(ngModel)]="isAbove18" />
+  <label> I confirm that I am above 18 years old </label>
+
+  {{ isAbove18 }}
+
+  <br /><br />
+  <h2>Example from dropdown with array</h2>
+  <div class="form-group">
+    <label for="favoriteColor">Choose your favorite color:</label>
+    <select
+      class="form-control"
+      [(ngModel)]="selectedColor"
+      (change)="onChangeColor()"
+    >
+      <option *ngFor="let color of colorOptions" [value]="color">
+        {{ color }}
+      </option>
+    </select>
+  </div>
+
+  <p>you choose >> {{ selectedColor }}</p>
+
+  <h2>example with radio buttons</h2>
+  <label>
+    <input type="radio" name="color" value="red" [(ngModel)]="color" />
+    Red
+  </label>
+  <br />
+  <label>
+    <input type="radio" name="color" value="blue" [(ngModel)]="color" />
+    Blue
+  </label>
+  <br />
+  <label>
+    <input type="radio" name="color" value="green" [(ngModel)]="color" />
+    Green
+  </label>
+  <br /><br />
+
+  <p>you choose >> {{ color }}</p>
+
+  <br /><br />
+
+  <br /><br />
+
+  <h2 (mousemove)="doSomething()">on mouse move !</h2>
+
+  <p>
+    every time the mouse will move above this headline it will console something
+    (it can be anything...)
+  </p>
+
+  <br /><br />
+
+  <button
+    class="btn btn-info"
+    (click)="check1()"
+    (click)="check2()"
+    (mouseup)="check3()"
+  >
+    this button trigger 2 events type of - click.
+  </button>
+
+  <br /><br />
+
+  <h2>this method will trigger on any keypress !!</h2>
+  <label>enter your name or whatever...</label>
+  <p>
+    note to my self : input event type is the best to catch user input. it works
+    better then (keydown, keyup and keypress) that didnt work so well.
+  </p>
+  <input (input)="onKey($event)" />
+  <p>you enterd : {{ values }}</p>
+
+  <h2>
+    this method will triger every time the user click on the input field !!
+  </h2>
+  <label>enter your name or whatever...</label>
+  <input (click)="onClick($event)" />
+  <p>you entered : {{ values2 }}</p>
+
+  <br /><br />
+
+  <!-- <button class="top-left-button" (click)="dontComeHere($event)">
+    Top Left
+  </button>
+  <button class="top-right-button" (click)="dontComeHere($event)">
+    Top Right
+  </button>
+  <button class="bottom-left-button" (dblclick)="dontComeHere($event)">
+    Bottom Left
+    <br />
+    this will work only with dbl click !!
+  </button>
+  <button class="bottom-right-button" (dblclick)="dontComeHere($event)">
+    Bottom Right
+    <br />
+    this will work only with dbl click !!
+  </button> -->
+
+  <h2>Focus & Blur</h2>
+  <p>
+    this is focus and blur - every time you "focus" the input the event will
+    trigger the function called - onFocus()
+    <br />
+    and every time you leave the input the blur event will trigger the function
+    called - onBlur()
+  </p>
+  <input type="text" (blur)="onBlur()" (focus)="onFocus()" />
+</div>

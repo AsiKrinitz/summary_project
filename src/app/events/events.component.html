@@ -1,0 +1,17 @@
+<p>here im gonna check some stuff</p>
+<h5>Change Event !</h5>
+
+<select [(ngModel)]="selectedOption" (change)="handleOptionChange()">
+  <option value="option1">Option 1</option>
+  <option value="option2">Option 2</option>
+  <option value="option3">Option 3</option>
+</select>
+
+<br />
+
+<p>you choose - {{ selectedOption }}</p>
+
+<br /><br />
+
+<label>choose your favorite color : </label>
+<input type="text" [(ngModel)]="userInput" (input)="handleInput()" />

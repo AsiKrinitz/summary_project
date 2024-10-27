@@ -1,0 +1,85 @@
+<div class="card flex justify-content-center">
+  <p-multiSelect
+    [options]="countries"
+    [(ngModel)]="selectedCountries"
+   
+    optionLabel="name"
+    (click)="onCountrySelection()"
+    (onChange)="onChange($event)"
+  ></p-multiSelect>
+</div>
+
+<p>the last country you choose is : >> {{ selectedCountry | json }}</p>
+<p>the last country you choose is : >> {{ selectedCountry.name }}</p>
+
+<br /><br />
+
+<button class="btn btn-primary" (click)="showSelectedCountries()">
+  show only selected countries
+</button>
+
+<br /><br />
+
+<button class="btn btn-info" (click)="onlyEuCountries()">
+  show only eu countries on table !
+</button>
+
+<br /><br /><br /><br />
+
+<h1>Selected Countries only !!!</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Country Name</th>
+      <th>Country Code</th>
+      <th>belong to eu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let country of selectedCountries">
+      <td>{{ country.name }}</td>
+      <td>{{ country.code }}</td>
+      <td>{{ country.belongToEuropeUnion }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<br /><br /><br /><br />
+
+<h1>only europe countries !!!</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Country Name</th>
+      <th>Country Code</th>
+      <th>belong to eu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let country of euCountries">
+      <td>{{ country.name }}</td>
+      <td>{{ country.code }}</td>
+      <td>{{ country.belongToEuropeUnion }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<br /><br /><br /><br />
+
+<h1>all countries !!!</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Country Name</th>
+      <th>Country Code</th>
+      <th>belong to eu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let country of countries">
+      <td>{{ country.name }}</td>
+      <td>{{ country.code }}</td>
+      <td>{{ country.belongToEuropeUnion }}</td>
+    </tr>
+  </tbody>
+</table>

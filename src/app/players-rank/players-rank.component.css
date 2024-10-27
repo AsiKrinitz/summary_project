@@ -1,0 +1,71 @@
+#rank-title {
+  text-align: center;
+  color: purple;
+  background-color: gray;
+}
+
+.custom-table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: center;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+.custom-table th {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0069d9;
+}
+
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+::ng-deep .p-button-rounded.p-button-danger:hover {
+  background-color: gold !important;
+  color: black !important;
+}
+
+::ng-deep .p-button-rounded:hover {
+  background-color: gold !important;
+  color: black !important;
+}

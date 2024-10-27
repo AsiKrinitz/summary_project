@@ -1,0 +1,14 @@
+
+
+<br /><br /><br /><br />
+<h1 id="gallery-title">This Is Our Naruto Gallery !</h1>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6 col-md-4" *ngFor="let image of imagesArray">
+      <a href="{{ image }}" data-lightbox="gallery">
+        <img src="{{ image }}" class="img-fluid gallery-img" />
+      </a>
+    </div>
+  </div>
+</div>

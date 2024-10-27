@@ -1,0 +1,29 @@
+#title {
+  background-color: gold;
+  color: darkblue;
+  text-align: center;
+}
+
+#sub-title {
+  background-color: silver;
+  color: red;
+  text-align: center;
+}
+
+#info {
+  font-size: 20px;
+}
+.border-style {
+  padding: 50px;
+  margin-left: 200px;
+  margin-right: 200px;
+  border: 4px solid black;
+}
+
+#labelId {
+  color: rgb(35, 28, 133);
+  
+}
+
+
+

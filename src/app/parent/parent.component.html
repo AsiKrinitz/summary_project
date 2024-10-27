@@ -1,0 +1,9 @@
+<label>enter your message</label>
+<input type="text" [(ngModel)]="message" />
+
+<br /><br />
+
+<app-child
+  (test123)="reciveData($event)"
+  [messageFromOutside]="message"
+></app-child>

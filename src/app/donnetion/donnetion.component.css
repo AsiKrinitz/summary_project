@@ -1,0 +1,64 @@
+.donation-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-input {
+  text-align: center;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-gender {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.form-gender-inputs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.form-gender-inputs label {
+  margin-right: 10px;
+}
+
+.form-select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.form-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-checkbox-input {
+  margin-right: 10px;
+}
+

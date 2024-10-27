@@ -1,0 +1,29 @@
+<h1>payment with hostedfields</h1>
+
+<form id="payment_form">
+  <div class="col-md-4 mb-3">
+    <label for="card_holder_id_number">Enter Card Holder ID</label>
+    <input class="form-control" id="card_holder_id_number" />
+    <div id="errors_for_card_holder_id_number" class="error_message"></div>
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <label for="credit_card_number">Enter credit card</label>
+    <input class="form-control" id="credit_card_number" />
+    <div id="errors_for_credit_card_number" class="error_message"></div>
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <label for="cvv">Enter CVV</label>
+    <input class="form-control" id="cvv" />
+    <div id="errors_for_cvv" class="error_message"></div>
+  </div>
+
+  <div class="col-md-4 mb-3">
+    <label for="amount">Enter Transaction Amount</label>
+    <input class="form-control" id="amount" />
+    <div id="errors_for_amount" class="error_message"></div>
+  </div>
+
+  <input class="form-control" type="submit" value="Submit" />
+</form>

@@ -1,0 +1,85 @@
+<h2>Donnetion Component !</h2>
+
+<h4>enter your details :</h4>
+
+<form class="donation-form" #dForm="ngForm" (ngSubmit)="submitForm(dForm)">
+  <label class="form-label">Enter your name</label>
+  <input
+    class="form-input"
+    type="text"
+    name="userName"
+    [(ngModel)]="userName"
+    required
+  />
+
+  <label class="form-label">Enter your donation amount</label>
+  <input
+    class="form-input"
+    type="number"
+    name="donation"
+    [(ngModel)]="amount"
+    required
+  />
+
+  <div class="form-gender">
+    <label class="form-label">Choose your gender</label>
+    <div class="form-gender-inputs">
+      <input
+        type="radio"
+        name="gender"
+        value="male"
+        [(ngModel)]="gender"
+        required
+      />
+      <label>Male</label>
+      <input
+        type="radio"
+        name="gender"
+        value="female"
+        [(ngModel)]="gender"
+        required
+      />
+      <label>Female</label>
+      <input
+        type="radio"
+        name="gender"
+        value="other"
+        [(ngModel)]="gender"
+        required
+      />
+      <label>Other</label>
+    </div>
+  </div>
+
+  <div class="form-country">
+    <label class="form-label">Choose your country</label>
+    <select
+      class="form-select"
+      name="country"
+      [(ngModel)]="selectedCountry"
+      required
+    >
+      <option value="">Select a country</option>
+      <option *ngFor="let country of countries" [value]="country">
+        {{ country }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-checkbox">
+    <label class="form-label">Are you over 18?</label>
+    <input
+      class="form-checkbox-input"
+      type="checkbox"
+      name="check"
+      [(ngModel)]="checked"
+      required
+    />
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="!dForm.valid">
+    Donneate now !
+  </button>
+</form>
+
+<br /><br />

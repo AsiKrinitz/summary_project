@@ -1,0 +1,145 @@
+<h1 id="rank-title">our ranking !</h1>
+
+<table class="custom-table">
+  <thead>
+    <tr>
+      <th>Player Id</th>
+      <th>Player Name</th>
+      <th>Age</th>
+      <th>Favorite Color</th>
+      <th>Country</th>
+      <th>Gender</th>
+      <th>Update</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of playersArray">
+      <td>{{ player.Id }}</td>
+      <td>{{ player.Name }}</td>
+      <td>{{ player.Age }}</td>
+      <td>{{ player.Color }}</td>
+      <td>{{ player.Country }}</td>
+      <td>{{ player.Gender }}</td>
+      <td>
+        <p-button
+          styleClass="p-button-rounded"
+          (click)="openDialog(player.Id, player.Name, player.Age, player.Color)"
+        >
+          Update
+        </p-button>
+        <!-- open the update dialog -->
+        <p-dialog
+          header="Update Info"
+          [(visible)]="visible"
+          [style]="{ width: '50vw' }"
+          [modal]="true"
+        >
+          <h2>change info ! {{ player.Id }}</h2>
+          <form #playerForm="ngForm">
+            <h2>player ID {{ currentId }}</h2>
+
+            <label>player Id</label>
+
+            <input type="text" name="id" [(ngModel)]="currentId" readonly />
+
+            <label>player name</label>
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="name"
+              minlength="2"
+              maxlength="10"
+            />
+
+            <label>player age</label>
+            <input
+              type="number"
+              name="age"
+              [(ngModel)]="age"
+              min="1"
+              max="120"
+              required
+            />
+
+            <label>favorite color</label>
+            <input
+              type="text"
+              name="color"
+              [(ngModel)]="color"
+              required
+              minlength="3"
+              maxlength="7"
+            />
+
+            <label>Country</label>
+            <p-dropdown
+              [options]="countries"
+              [(ngModel)]="selectedCountry"
+              placeholder="Select a Country"
+              name="country"
+              [editable]="true"
+            >
+            </p-dropdown>
+          </form>
+
+          <ng-template pTemplate="footer">
+            <p-button
+              styleClass="p-button-raised p-button-success"
+              icon="pi pi-check"
+              (click)="updatePlayerInDialog(playerForm)"
+              label="change details !"
+              [disabled]="!playerForm.valid"
+            >
+            </p-button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Exit"
+              (click)="visible = false"
+            ></button>
+          </ng-template>
+        </p-dialog>
+      </td>
+      <td>
+        <p-button
+          styleClass="p-button-rounded p-button-danger"
+          (click)="openDeleteDialog(player.Id)"
+        >
+          <!-- open the delete dialog -->
+          Delete
+        </p-button>
+
+        <!-- delete dialog -->
+        <p-dialog
+          header="Update Info"
+          [(visible)]="visible2"
+          [style]="{ width: '50vw' }"
+          [modal]="true"
+        >
+          <label>are you sure you want to delete ??</label>
+          <ng-template pTemplate="footer">
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Delete !"
+              class="p-button-danger"
+              (click)="deletePlayerById(player.Id)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              type="button"
+              label="Exit"
+              (click)="visible2 = false"
+            ></button>
+          </ng-template>
+        </p-dialog>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br /><br /><br /><br /><br /><br />
